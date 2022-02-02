@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body onload="post()">
+    <!-- Header -->
+    <nav class="navbar navbar-light bg-white" style="
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+        justify-content: center;
+      ">
+        <img width="55"
+            src="data:image/jpeg;base64,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"
+            style="border-radius: 50%; margin-right: 5px" />
+        <a href="#" class="navbar-brand">Opus Lab</a>
+        <form class="form-inline" onsubmit="prevent(event)">
+            <div class="input-group">
+                <input type="text" class="form-control" aria-label="Recipient's username"
+                    aria-describedby="button-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="button-addon2">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </nav>
+
+    <!---Make Post Section -->
+    <div class="card gedf-card col-md-6" style="margin: auto; margin-top: 8px">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab"
+                        aria-controls="posts" aria-selected="true">Make a publication</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images"
+                        aria-selected="false" href="#images">medias</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <form id="formP" onsubmit="addPost(event)">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                        <div class="form-group">
+                            <label class="sr-only" for="message">post</label>
+                            <textarea required class="form-control" id="message" name="body" rows="3"
+                                placeholder="What are you thinking?"></textarea>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" name="photo" class="custom-file-input" id="customFile" onchange="handlefile()" />
+                                <img id="image" src="" width="100"/>
+                                <label class="custom-file-label" for="customFile">Upload image</label>
+                            </div>
+                        </div>
+                        <div class="py-4"></div>
+                    </div>
+                </div>
+                <div class="btn-toolbar justify-content-between">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary" onclick=" newpost(event)">
+                            share
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Posts Section /////-->
+    <div class="col-md-5 gedf-main" style="margin: auto">
+
+        <h1 style="color: cadetblue;">Acceuil</h1>
+        <ul id="myposts">
+            
+
+        </ul>
+    </div>
+    <script src="post.js"></script>
+
+</body>
+</html>
